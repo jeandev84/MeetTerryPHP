@@ -25,7 +25,7 @@ class ConfigServiceProvider extends ServiceProvider
              $resources  = $app['filesystem']->resources('config/*');
              $config   = [];
              foreach ($resources as $name => $file) {
-                $config[$name] = require_once $file;
+                $config[$name] = require $file;
              }
              return new Config($config);
         });

@@ -3,12 +3,17 @@ declare(strict_types=1);
 
 namespace Framework\Foundation;
 
+use DateTimeInterface;
+use DateTime;
+use DateTimeZone;
 use Exception;
 use Framework\Component\Config\Config;
 use Framework\Component\Container\Container;
 use Framework\Component\Filesystem\Filesystem;
 use Framework\Foundation\Providers\ConfigServiceProvider;
 use Framework\Foundation\Providers\FilesystemServiceProvider;
+
+
 
 /**
  * App
@@ -60,7 +65,9 @@ class App extends Container
      */
      public function getLogPath(): string
      {
-         if (!isset($this['config']['app']['log_path'])) {
+         $logPath = $this['config']['app']['log_path'] ?? '';
+
+         if (empty($logPath)) {
              throw new Exception('Log path is not defined');
          }
 
@@ -79,6 +86,17 @@ class App extends Container
          return (php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg');
      }
 
+
+     /**
+      * @return DateTimeInterface
+      * @throws Exception
+     */
+     public function getServerTime(): DateTimeInterface
+     {
+        $tz          = $this['config']['app']['timezone'] ?? 'UTC';
+        $timezone    = new DateTimeZone($tz);
+        return new DateTime('now', $timezone);
+     }
 
 
 
