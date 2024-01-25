@@ -6,6 +6,7 @@
 composer require phpunit/phpunit
 vendor/bin/phpunit tests
 vendor/bin/phpunit --testdox tests
+vendor/bin/phpunit tests --testdox --filter DatabaseConnectionTest
 ```
 
 

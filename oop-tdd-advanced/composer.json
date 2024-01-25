@@ -1,7 +1,8 @@
 {
     "require": {
         "symfony/var-dumper": "^6.4",
-        "ext-mysqli": "*"
+        "ext-mysqli": "*",
+        "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {
