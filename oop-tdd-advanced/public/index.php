@@ -7,7 +7,6 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $app = new App(realpath(__DIR__.'/../'));;
 
-$info = new \Framework\Foundation\Debug\Info($app);
-echo $info;
+echo $app->getInfo();
 
 dd($app);

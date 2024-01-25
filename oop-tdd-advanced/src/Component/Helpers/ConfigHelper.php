@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Framework\Component\Helpers;
 
-use RuntimeException;
+use Framework\Exception\NotFoundException;
 use Throwable;
 
 /**
@@ -54,7 +54,7 @@ class ConfigHelper
               }
 
           } catch (Throwable $e) {
-              throw new RuntimeException(
+              throw new NotFoundException(
                   sprintf('The specified file: %s was not found', $filename)
               );
           }

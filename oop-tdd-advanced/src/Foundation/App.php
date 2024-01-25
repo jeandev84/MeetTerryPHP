@@ -10,6 +10,7 @@ use Exception;
 use Framework\Component\Config\Config;
 use Framework\Component\Container\Container;
 use Framework\Component\Filesystem\Filesystem;
+use Framework\Foundation\Debug\Info;
 use Framework\Foundation\Providers\ConfigServiceProvider;
 use Framework\Foundation\Providers\FilesystemServiceProvider;
 
@@ -96,6 +97,17 @@ class App extends Container
         $tz          = $this['config']['app']['timezone'] ?? 'UTC';
         $timezone    = new DateTimeZone($tz);
         return new DateTime('now', $timezone);
+     }
+
+
+     /**
+      * @return string
+     */
+     public function getInfo(): string
+     {
+         $info = new Info($this);
+
+         return strval($info);
      }
 
 
