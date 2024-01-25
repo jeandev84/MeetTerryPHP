@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Framework\Foundation\Debug;
 
 use Framework\Exception\Handler\ExceptionHandler;
+use Framework\Exception\Handler\Whoops;
 use Framework\Foundation\App;
 
 /**
@@ -29,7 +30,7 @@ class Capture
     */
     public static function boot(App $app): void
     {
-        $whoops = new \Framework\Exception\Handler\Whoops();
+        $whoops = new Whoops();
         $whoops->pushHandler(new ExceptionHandler($app));
         $whoops->pushErrorHandler([new ExceptionHandler($app), 'convertWarningsAndNoticesToException']);
         $whoops->run();
