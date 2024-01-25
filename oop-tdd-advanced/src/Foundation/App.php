@@ -69,9 +69,14 @@ class App extends Container
 
 
 
+
+
+     /**
+      * @return bool
+     */
      public function isRunningFromConsole(): bool
      {
-
+         return (php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg');
      }
 
 
