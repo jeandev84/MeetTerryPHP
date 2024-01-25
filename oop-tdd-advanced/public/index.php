@@ -7,10 +7,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $app = new App(realpath(__DIR__.'/../'));;
 
-dump($app->getServerTime()->format('Y-m-d H:i:s'));
-dump($app->getLogPath());
-dump($app->getEnvironment());
-dump($app->isDebugMode());
-dump($app->isRunningFromConsole());
+$info = new \Framework\Foundation\Debug\Info($app);
+echo $info;
 
 dd($app);
