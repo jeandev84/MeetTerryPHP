@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Framework\Exception\Handler;
 
+use Exception;
 use Framework\Foundation\App;
 use Throwable;
 
@@ -15,7 +16,7 @@ use Throwable;
  *
  * @package  Framework\Exception\Handler
  */
-class ExceptionHandler
+class ExceptionHandler implements ExceptionHandlerInterface
 {
 
       /**
@@ -30,13 +31,20 @@ class ExceptionHandler
 
 
       /**
-       * @param Throwable $e
-       * @return void
+       * @inheritdoc
       */
-      public function handle(Throwable $e): void
+      public function handle(Throwable $e): bool
       {
           if ($this->app->isDebugMode()) {
               dump($e);
+          } else {
+              echo "This should not have happened, please try again";
           }
+          return true;
+      }
+
+      public function getException(): Exception
+      {
+           return '';
       }
 }

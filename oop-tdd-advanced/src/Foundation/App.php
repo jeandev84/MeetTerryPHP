@@ -10,6 +10,7 @@ use Exception;
 use Framework\Component\Config\Config;
 use Framework\Component\Container\Container;
 use Framework\Component\Filesystem\Filesystem;
+use Framework\Exception\Handler\ExceptionHandler;
 use Framework\Foundation\Debug\Info;
 use Framework\Foundation\Providers\ConfigServiceProvider;
 use Framework\Foundation\Providers\FilesystemServiceProvider;
@@ -31,7 +32,7 @@ class App extends Container
      /**
       * @param string $basePath
      */
-     public function __construct(string $basePath)
+     public function __construct(string $basePath = '')
      {
          $this->registerBindings($basePath);
          $this->registerProviders();
@@ -120,6 +121,7 @@ class App extends Container
      */
      private function registerBindings(string $basePath): void
      {
+         Capture::boot($this);
          static::setInstance($this);
          $this->bind('basePath', $basePath);
      }
@@ -134,7 +136,8 @@ class App extends Container
      */
      private function registerProviders(): void
      {
-          $this->add(FilesystemServiceProvider::class)
+          $this
+               ->add(FilesystemServiceProvider::class)
                ->add(ConfigServiceProvider::class);
      }
 }
