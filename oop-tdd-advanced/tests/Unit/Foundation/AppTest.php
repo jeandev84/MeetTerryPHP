@@ -21,4 +21,15 @@ class AppTest extends TestCase
     {
         self::assertInstanceOf(App::class, new App(__DIR__.'/../'));
     }
+
+
+
+    public function testItCanGetBasicApplicationDatasetFromAppClass(): void
+    {
+          $app = new App(__DIR__.'/../../../');
+          self::assertTrue($app->isRunningFromConsole());
+          self::assertSame('test', $app->getEnvironment());
+          self::assertNotNull($app->getLogPath());
+          self::assertInstanceOf(\DateTime::class, $app->getServerTime());
+    }
 }

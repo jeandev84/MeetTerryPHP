@@ -52,7 +52,11 @@ class App extends Container
      */
      public function getEnvironment(): string
      {
-         return $this['config']['app']['env'] ?? 'production';
+         if (!isset($this['config']['app']['env'])) {
+             return 'production';
+         }
+
+         return $this->isTestMode() ? 'test' : $this['config']['app']['env'];
      }
 
 
@@ -86,6 +90,8 @@ class App extends Container
      }
 
 
+
+
      /**
       * @return DateTimeInterface
       * @throws Exception
@@ -96,6 +102,25 @@ class App extends Container
         $timezone    = new DateTimeZone($tz);
         return new DateTime('now', $timezone);
      }
+
+
+     /**
+      * @return bool
+     */
+     public function isTestMode(): bool
+     {
+          // PHPUNIT_RUNNING from config phpunit.xml
+          # $this->isRunningFromConsole() && defined('PHPUNIT_RUNNING') && PHPUNIT_RUNNING == true
+          if ($this->isRunningFromConsole() && defined('PHPUNIT_RUNNING')) {
+              return true;
+          }
+
+          return false;
+     }
+
+
+
+
 
 
      /**
@@ -133,8 +158,7 @@ class App extends Container
      */
      private function registerProviders(): void
      {
-          $this
-               ->add(FilesystemServiceProvider::class)
+          $this->add(FilesystemServiceProvider::class)
                ->add(ConfigServiceProvider::class);
      }
 }

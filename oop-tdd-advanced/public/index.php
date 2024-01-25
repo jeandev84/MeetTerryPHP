@@ -9,6 +9,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $app = new App(realpath(__DIR__.'/../'));;
 
+
 $logger = new \Framework\Component\Logger\Logger($app);
 #$logger->log('no level', 'test no level');
 $logger->log(LogLevel::EMERGENCY, 'There is an emergency', [
