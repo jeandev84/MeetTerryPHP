@@ -9,6 +9,9 @@ require_once __DIR__.'/../vendor/autoload.php';
 /* set_exception_handler([new ExceptionHandler(), 'handle']); */
 $app = new App(realpath(__DIR__.'/../'));;
 
-echo $app->getInfo();
+
+$db = new mysqli('jssss', 'root', 'secret', 'bug');
+exit;
+// echo $app->getInfo();
 
 dd($app);

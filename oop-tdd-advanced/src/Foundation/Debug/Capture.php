@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Framework\Foundation;
+namespace Framework\Foundation\Debug;
 
 use Framework\Exception\Handler\ExceptionHandler;
+use Framework\Foundation\App;
 
 /**
  * Capture
@@ -12,7 +13,7 @@ use Framework\Exception\Handler\ExceptionHandler;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Framework\Foundation
+ * @package  Framework\Foundation\Debug
  */
 class Capture
 {
@@ -30,6 +31,7 @@ class Capture
     {
         $whoops = new \Framework\Exception\Handler\Whoops();
         $whoops->pushHandler(new ExceptionHandler($app));
+        $whoops->pushErrorHandler([new ExceptionHandler($app), 'convertWarningsAndNoticesToException']);
         $whoops->run();
     }
 }

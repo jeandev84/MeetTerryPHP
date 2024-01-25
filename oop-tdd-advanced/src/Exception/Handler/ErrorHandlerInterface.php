@@ -18,5 +18,5 @@ use Throwable;
 */
 interface ErrorHandlerInterface extends Handler
 {
-     public function getError(): Error;
+     public function getError(): \ErrorException;
 }

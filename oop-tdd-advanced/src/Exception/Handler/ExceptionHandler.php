@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Framework\Exception\Handler;
 
+use ErrorException;
 use Exception;
 use Framework\Foundation\App;
 use Throwable;
@@ -15,8 +16,10 @@ use Throwable;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Framework\Exception\Handler
+ *
+ * @see https://www.php.net/manual/en/function.error-reporting.php
  */
-class ExceptionHandler implements ExceptionHandlerInterface
+class ExceptionHandler implements Handler
 {
 
       /**
@@ -43,8 +46,22 @@ class ExceptionHandler implements ExceptionHandlerInterface
           return true;
       }
 
-      public function getException(): Exception
+
+      /**
+       * @param $severity
+       * @param $message
+       * @param $file
+       * @param $line
+       * @return void
+       * @throws ErrorException
+      */
+      public function convertWarningsAndNoticesToException(
+          $severity,
+          $message,
+          $file,
+          $line
+      ): void
       {
-           return '';
+          throw new ErrorException($message, $severity, $severity, $file, $line);
       }
 }

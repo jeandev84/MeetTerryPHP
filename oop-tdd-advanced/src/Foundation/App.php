@@ -3,18 +3,15 @@ declare(strict_types=1);
 
 namespace Framework\Foundation;
 
-use DateTimeInterface;
 use DateTime;
+use DateTimeInterface;
 use DateTimeZone;
 use Exception;
-use Framework\Component\Config\Config;
 use Framework\Component\Container\Container;
-use Framework\Component\Filesystem\Filesystem;
-use Framework\Exception\Handler\ExceptionHandler;
+use Framework\Foundation\Debug\Capture;
 use Framework\Foundation\Debug\Info;
 use Framework\Foundation\Providers\ConfigServiceProvider;
 use Framework\Foundation\Providers\FilesystemServiceProvider;
-
 
 
 /**
