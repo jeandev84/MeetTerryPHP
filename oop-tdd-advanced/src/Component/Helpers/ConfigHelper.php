@@ -6,6 +6,8 @@ namespace Framework\Component\Helpers;
 use Framework\Exception\NotFoundException;
 use Throwable;
 
+define('CONFIG_PATH', dirname(dirname(dirname(__DIR__))) . '/config');
+
 /**
  * ConfigHelper
  *
@@ -36,16 +38,13 @@ class ConfigHelper
       /**
        * @param string $filename
        * @return array
+       * @throws NotFoundException
       */
       public static function getFileContent(string $filename): array
       {
           $fileContent = [];
 
           try {
-
-              if (!defined(CONFIG_PATH)) {
-                  return [];
-              }
 
               $path = realpath(sprintf(CONFIG_PATH.'/%s.php', $filename));
 

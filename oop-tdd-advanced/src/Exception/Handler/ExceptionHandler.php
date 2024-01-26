@@ -40,6 +40,7 @@ class ExceptionHandler implements Handler
       {
           if ($this->app->isDebugMode()) {
               dump($e);
+              echo 'from : ' . __METHOD__;
           } else {
               echo "This should not have happened, please try again";
           }

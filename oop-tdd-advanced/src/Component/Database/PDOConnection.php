@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Framework\Component\Database;
 
+use Framework\Exception\DatabaseConnectionException;
 use PDO;
+use PDOException;
 
 /**
  * PDOConnection
@@ -32,6 +34,18 @@ class PDOConnection extends AbstractConnection  implements DatabaseConnectionInt
     */
     public function connect(): static
     {
+        $credentials = $this->parseCredentials($this->credentials);
+
+        try {
+            $this->connection = new PDO(...$credentials);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(
+        PDO::ATTR_DEFAULT_FETCH_MODE,
+                $this->credentials['default_fetch']
+            );
+        } catch (PDOException $e) {
+            throw new DatabaseConnectionException($e->getMessage(), $this->credentials, 500);
+        }
         return $this;
     }
 
@@ -41,8 +55,27 @@ class PDOConnection extends AbstractConnection  implements DatabaseConnectionInt
     /**
      * @inheritDoc
     */
-    public function getConnection(): mixed
+    public function getConnection(): PDO
     {
-        // TODO: Implement getConnection() method.
+        return $this->connection;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    protected function parseCredentials(array $credentials): array
+    {
+        // dsn: data source name
+        $dsn  = sprintf(
+            '%s:host=%s;dbname=%s',
+            $credentials['driver'],
+            $credentials['host'],
+            $credentials['db_name']
+        );
+
+        return [$dsn, $credentials['db_username'], $credentials['db_user_password']];
     }
 }
